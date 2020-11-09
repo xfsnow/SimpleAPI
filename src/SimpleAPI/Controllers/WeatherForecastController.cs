@@ -41,7 +41,7 @@ namespace SimpleAPI.Controllers
 
         public string Get(int id)
         {
-            return "Test Name";
+            return "Test";
         }
     }
 }
