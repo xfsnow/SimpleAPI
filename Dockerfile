@@ -17,3 +17,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "SimpleAPI.dll"]
+# Command to run this docker
+# docker run -p 80:80 --name simple  snowpeak/aspnet_simple
