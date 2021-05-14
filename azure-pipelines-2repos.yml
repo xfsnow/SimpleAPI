@@ -31,10 +31,14 @@ steps:
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)/s/MyApp'
     Contents: '**'
-    TargetFolder: '$(build.artifactStagingDirectory)/ClientApp'
+    TargetFolder: '$(Agent.BuildDirectory)/s/SimpleAPI/ClientApp'
 
-- script: dotnet build --configuration $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
   displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    projects: 'src/SimpleAPI/SimpleAPI.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
