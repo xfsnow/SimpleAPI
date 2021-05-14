@@ -11,7 +11,7 @@ resources:
     - repository: VUE
       name: SimpleAPI/MyApp
       type: git
-      ref: main
+      ref: topic
 
 pool:
   vmImage: 'windows-latest'
