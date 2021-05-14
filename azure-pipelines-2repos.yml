@@ -38,14 +38,14 @@ steps:
   displayName: 'dotnet build'
   inputs:
     command: 'build'
-    projects: 'src/SimpleAPI/SimpleAPI.csproj'
+    projects: '$(Agent.BuildDirectory)/s/SimpleAPI/src/SimpleAPI/SimpleAPI.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
   inputs:
     command: publish
     publishWebProjects: false
-    projects: 'src/SimpleAPI/SimpleAPI.csproj'
+    projects: '$(Agent.BuildDirectory)/s/SimpleAPI/src/SimpleAPI/SimpleAPI.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
