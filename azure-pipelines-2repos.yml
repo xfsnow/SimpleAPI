@@ -42,13 +42,12 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - checkout: VUE
-  path: '$(build.artifactStagingDirectory)/wwwroot'
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(build.artifactStagingDirectory)/wwwroot'
+    SourceFolder: '$(build.artifactStagingDirectory)/MyApp'
     Contents: '**'
-    TargetFolder: '$(build.artifactStagingDirectory)/SimpleAPI/src/SimpleAPI/obj/Release/netcoreapp3.1/PubTmp/Out/'
+    TargetFolder: '$(build.artifactStagingDirectory)/SimpleAPI/src/SimpleAPI/obj/Release/netcoreapp3.1/PubTmp/Out/wwwroot'
 
 - task: ArchiveFiles@2
   inputs:
