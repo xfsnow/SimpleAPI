@@ -14,7 +14,7 @@ resources:
       ref: topic
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   solution: '**/*.sln'
@@ -23,29 +23,6 @@ variables:
 
 steps:
 - checkout: self
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '*.*/*.csproj'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
 
 - checkout: VUE
 # VUE 也应该构建，只要输出的文件就行。
@@ -54,15 +31,20 @@ steps:
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)/s/MyApp'
     Contents: '**'
-    TargetFolder: '$(build.artifactStagingDirectory)/SimpleAPI/src/SimpleAPI/obj/Release/netcoreapp3.1/PubTmp/Out/wwwroot'
+    TargetFolder: '$(build.artifactStagingDirectory)/ClientApp'
 
-- task: ArchiveFiles@2
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish'
   inputs:
-    rootFolderOrFile: '$(build.artifactStagingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    command: publish
+    publishWebProjects: false
+    projects: 'src/SimpleAPI/SimpleAPI.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
     
 - task: PublishBuildArtifacts@1
   inputs:
