@@ -29,7 +29,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/s/MyApp'
+    SourceFolder: '$(Agent.BuildDirectory)/s/MyApp/ClientApp'
     Contents: '**'
     TargetFolder: '$(Agent.BuildDirectory)/s/SimpleAPI/ClientApp'
 
