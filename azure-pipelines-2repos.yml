@@ -36,12 +36,19 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '*.*/*.csproj'
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - checkout: VUE
+# VUE 也应该构建，只要输出的文件就行。
 
 - task: CopyFiles@2
   inputs:
