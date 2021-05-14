@@ -6,6 +6,13 @@
 trigger:
 - master
 
+resources:
+  repositories:
+    - repository: VUE
+      name: SimpleAPI/MyApp
+      type: git
+      ref: main
+
 pool:
   vmImage: 'windows-latest'
 
@@ -15,6 +22,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- checkout: self
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -32,3 +40,20 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- checkout: VUE
+  path: 'wwwroot'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(build.artifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
