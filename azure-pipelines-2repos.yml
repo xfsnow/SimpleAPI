@@ -45,7 +45,7 @@ steps:
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)/s/MyApp/MyApp/ClientApp'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/wwwroot'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/SimpleApi/wwwroot'
 
 - task: ArchiveFiles@2
   inputs:
