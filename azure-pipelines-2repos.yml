@@ -27,12 +27,6 @@ steps:
 - checkout: VUE
 # VUE 也应该构建，只要输出的文件就行。
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/s/MyApp/MyApp/ClientApp'
-    Contents: '**'
-    TargetFolder: '$(Agent.BuildDirectory)/s/SimpleAPI/ClientApp'
-
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
@@ -48,6 +42,12 @@ steps:
     projects: '$(Agent.BuildDirectory)/s/SimpleAPI/src/SimpleAPI/SimpleAPI.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)/s/MyApp/MyApp/ClientApp'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/wwwroot'
 
     
 - task: PublishBuildArtifacts@1
