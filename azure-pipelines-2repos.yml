@@ -44,6 +44,12 @@ steps:
 - checkout: VUE
   path: 'wwwroot'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'wwwroot'
+    Contents: '**'
+    TargetFolder: '$(build.artifactStagingDirectory)/SimpleAPI/src/SimpleAPI/obj/Release/netcoreapp3.1/PubTmp/Out/'
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(build.artifactStagingDirectory)'
