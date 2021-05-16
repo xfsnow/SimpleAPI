@@ -42,7 +42,7 @@ steps:
     zipAfterPublish: false
 
 - bash: |
-    ls -l $(Build.ArtifactStagingDirectory)
+    ls -l $(Build.ArtifactStagingDirectory)/SimpleApi/
 
 - task: CopyFiles@2
   inputs:
