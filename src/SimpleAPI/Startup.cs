@@ -39,6 +39,8 @@ namespace SimpleAPI
             {
                 endpoints.MapControllers();
             });
+            // 允许输出静态文件
+            app.UseStaticFiles();
         }
     }
 }
