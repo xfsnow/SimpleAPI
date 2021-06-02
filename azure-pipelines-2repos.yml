@@ -1,7 +1,5 @@
-# ASP.NET
-# Build and test ASP.NET projects.
-# Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+# 为支持联想 Smart Dock 项目，演练 ASP.Net 前后端 2 个源码库合并到一个制品里的流水线。
 
 trigger:
 - master
